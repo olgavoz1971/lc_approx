@@ -1,4 +1,12 @@
-Python scripts to approximate light curves with different approximation methods.
+## lc_approx -- extended fork
+
+This is an extended fork of mpyat2/lc_approx.
+
+The original code is preserved, with additional documentation and agent skills intended to make the methods easier to integrate into light-curve analysis workflows.
+
+See the original project description below.
+
+# Python scripts to approximate light curves with different approximation methods.
 See, for example:
 
 Andrych, Kateryna D.; Andronov, Ivan L.; Chinarova, Lidia L.
