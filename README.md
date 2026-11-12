@@ -1,12 +1,48 @@
-## lc_approx -- extended fork
+# lc_approx
 
-This is an extended fork of mpyat2/lc_approx.
+Extended fork of [mpyat2/lc_approx](https://github.com/mpyat2/lc_approx). The approximation methods in `ila_code/ila.py` are the original ones. Licence: MIT. Copyright 2025 Maksym Yu. Pyatnytskyy.
 
-The original code is preserved, with additional documentation and agent skills intended to make the methods easier to integrate into light-curve analysis workflows.
+## Install
 
-See the original project description below.
+The library needs NumPy and SciPy. Python 3.10 or newer.
 
-# Python scripts to approximate light curves with different approximation methods.
+```bash
+pip install -e .
+```
+
+Distribution name `lc-approx`, version 0.1.0.
+
+`ila_ap.py` and `split_lc.py` need the `cli` extra (pandas, matplotlib, colorama):
+
+```bash
+pip install -e ".[cli]"
+```
+
+## Import
+
+```python
+from ila_code.ila import approx, method_result, f_AP_a, f_WSAP_a, f_WSL_a, f_A_a
+```
+
+`approx(method, t_obs, m_obs, maxfev=12000)` returns `(params_opt, params_cov, param_warning)`.
+
+`method_result(method, params_opt, params_cov, t_min, t_max)` returns the seven-value time-of-extremum tuple.
+
+`f_AP_a`, `f_WSAP_a`, `f_WSL_a`, and `f_A_a` evaluate the fitted model and return lists.
+
+Method ids: `AP`, `WSAP`, `WSL`, `A`.
+
+## Golden results
+
+Stored CLI times of extremum, and the commands that reproduce them, are in [approx_output/golden/README.md](approx_output/golden/README.md).
+
+-------------------------------------------------------------------------------
+
+# Original project description
+
+The text below is the original README from mpyat2/lc_approx, unchanged.
+
+Python scripts to approximate light curves with different approximation methods.
 See, for example:
 
 Andrych, Kateryna D.; Andronov, Ivan L.; Chinarova, Lidia L.

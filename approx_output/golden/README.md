@@ -1,8 +1,9 @@
 # Golden CLI results
 
-Numeric output of `ila_ap.py` before the tree is turned into an installable
-package. A later change is acceptable when a fresh run matches the
-`Time of Extremum (TOM)` column in these files.
+Numeric output of `ila_ap.py`, captured on the original methods and kept
+as the check after the tree became installable. A later change is
+acceptable when a fresh run matches the `Time of Extremum (TOM)` column
+in these files.
 
 Captured with Python 3.10.12, NumPy 2.2.6, SciPy 1.14.0. A second run of
 every command below matched these files byte for byte.
