@@ -16,7 +16,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ila_code.fit import fit_extremum
+from ila_code import fit_extremum
 from examples.series import asymptotic_series
 
 logger = logging.getLogger(__name__)

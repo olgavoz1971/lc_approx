@@ -1,0 +1,18 @@
+# lc-approx
+
+> Phenomenological approximations of variable-star light curves. This index belongs to the clone in the working directory. Read it before fitting.
+
+## Start here
+
+- [README.md](README.md): What the package does and how to install it from this clone.
+- [AGENTS.md](AGENTS.md): What to read before writing code, and which directories are not the public interface.
+- [skills/lc-approx/SKILL.md](skills/lc-approx/SKILL.md): The fit. One extremum, its formal error, a maximum or minimum of the supplied series, a failed window.
+
+## Examples and checks
+
+- [examples/README.md](examples/README.md): Small series and the commands that fit them.
+- [approx_output/golden/README.md](approx_output/golden/README.md): Stored command-line times and the commands that reproduce them.
+
+## Not the interface
+
+- [original_demos/](original_demos/): Original command-line scripts, launchers and their data. Not a second API.

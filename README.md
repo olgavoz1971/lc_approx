@@ -2,12 +2,22 @@
 
 Extended fork of [mpyat2/lc_approx](https://github.com/mpyat2/lc_approx). The approximation methods in `ila_code/ila.py` are the original ones. Licence: MIT. Copyright 2025 Maksym Yu. Pyatnytskyy.
 
+## For AI agents
+
+If you were asked to install this package from GitHub, do these steps in order. Stop before you write a fit.
+
+1. Clone `https://github.com/olgavoz1971/lc_approx` into the working directory and leave the clone there. The clone is the documentation: `AGENTS.md`, `llms.txt`, `skills/`, `examples/` and `approx_output/golden/` stay on disk for the rest of the task.
+2. Read `AGENTS.md`, then `llms.txt`, then `skills/lc-approx/SKILL.md`.
+3. From that clone run `pip install .`. The original command-line scripts need `pip install ".[cli]"`.
+
+Do not run `pip install git+https://github.com/olgavoz1971/lc_approx`. That command keeps `ila_code` and drops the skill, the examples and the golden files.
+
 ## Install
 
 The library needs NumPy and SciPy. Python 3.10 or newer.
 
 ```bash
-pip install -e .
+pip install .
 ```
 
 Distribution name `lc-approx`, version 0.1.0.
@@ -15,13 +25,20 @@ Distribution name `lc-approx`, version 0.1.0.
 `original_demos/ila_ap.py` and `original_demos/split_lc.py` need the `cli` extra (pandas, matplotlib, colorama):
 
 ```bash
-pip install -e ".[cli]"
+pip install ".[cli]"
 ```
+
+While changing this package, install it editable so imports follow the clone: `pip install -e ".[test]"`.
 
 ## Import
 
 ```python
-from ila_code.fit import fit_extremum
+from ila_code import fit_extremum, FitResult
+```
+
+The model functions stay in `ila_code.ila`:
+
+```python
 from ila_code.ila import approx, method_result, f_AP_a, f_WSAP_a, f_WSL_a, f_A_a
 ```
 
@@ -44,7 +61,7 @@ Stored CLI times of extremum, and the commands that reproduce them, are in [appr
 ## Tests
 
 ```bash
-pip install -e ".[test]"
+pip install ".[test]"
 python -m pytest
 ```
 

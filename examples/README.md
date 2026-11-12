@@ -1,6 +1,6 @@
 # Fit examples
 
-Run these from the repository root. They call `ila_code.fit.fit_extremum`.
+Run these from the repository root. They call `fit_extremum` from `ila_code`.
 
 ```bash
 python examples/minimum_ap.py
