@@ -52,7 +52,7 @@ A filled `time` is the command-line time of extremum (`accepted`, `bounds_outsid
 
 `f_AP_a`, `f_WSAP_a`, `f_WSL_a`, and `f_A_a` evaluate the fitted model and return lists.
 
-Method ids: `AP`, `WSAP`, `WSL`, `A`. Small runnable series are in [examples/README.md](examples/README.md). The original command-line scripts, their launchers, and `test_data/` are in [original_demos/](original_demos/).
+Method ids: `AP`, `WSAP`, `WSL`, `A`. Fits of V405 Dra and KP Lyn-2, with a PNG of each fit, are in [examples/README.md](examples/README.md). The original command-line scripts, their launchers, and `test_data/` are in [original_demos/](original_demos/).
 
 ## Golden results
 

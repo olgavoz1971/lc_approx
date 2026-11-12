@@ -1,27 +1,17 @@
 # Fit examples
 
-Run these from the repository root. They call `fit_extremum` from `ila_code`.
+`simple_example.py` fits the whole of `original_demos/test_data/V405_Dra.dat`
+and `original_demos/test_data/KP_Lyn-2.dat` with AP, WSAP, WSL and A.
 
 ```bash
-python examples/minimum_ap.py
-python examples/maximum_ap.py
-python examples/wsl_sigma_missing.py
-python examples/batch_continues.py
+python examples/simple_example.py
 ```
 
-`minimum_ap.py` fits an asymptotic parabola. `formal_sigma` is the
-covariance error of the time. `residual_rms` is the scatter of the
-residuals. A filled `time` is the command-line time of extremum.
-An empty `time` is the golden `nan`.
+The PNGs are written under `examples/output/`. Matplotlib is required
+(`pip install ".[cli]"`). The magnitude axis has the faint direction
+downward. The left wing is `#6a3d9a`, the core `#33a02c`, the right
+wing `#ff7f00`. A filled time with a formal error is a `#e7298a` line.
+A filled time whose formal error is empty is a `#ff7f00` line. An empty
+time is not marked.
 
-`maximum_ap.py` is the same call on a series with negative C2. The
-result says `maximum` of that series.
-
-`wsl_sigma_missing.py` is a flat series. The time is the midpoint of
-C4 and C5 and is the command-line time. The formal error is empty, and
-the status is `sigma_missing`.
-
-`batch_continues.py` fits the next window after a failure. Four points
-are too few for AP. A library time that is not finite stays empty.
-A core shorter than its formal error is `short_core`. Method A on five
-points is passed to the optimiser.
+The earlier synthetic examples are in `examples/temporal_back/`.
