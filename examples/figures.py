@@ -1,8 +1,10 @@
 """Figures for the example fits.
 
-Draws the points, the model split at C4 and C5, and a line at a filled
-time. An empty time is left unmarked. Magnitude axes are drawn with the
-faint direction downward, as the command-line preview does.
+Draws the points and the model split at C4 and C5. C4 and C5 are dotted
+maroon lines, as on the MAVKA review card. A filled time is a dashed
+magenta line, with dotted lines at ± its uncertainty when that is finite.
+An empty time is left unmarked. Magnitude axes are drawn with the faint
+direction downward.
 """
 
 from __future__ import annotations
@@ -24,7 +26,7 @@ logger = logging.getLogger(__name__)
 _EVALUATE = {"AP": f_AP_a, "WSAP": f_WSAP_a, "WSL": f_WSL_a, "A": f_A_a}
 _PIECE_COLOUR = {"left": "#6a3d9a", "core": "#33a02c", "right": "#ff7f00"}
 _TIME_COLOUR = "#e7298a"
-_MISSING_SIGMA_COLOUR = "#ff7f00"
+_JUNCTION_COLOUR = "maroon"
 
 
 def save_fit_figure(
@@ -33,32 +35,49 @@ def save_fit_figure(
     values: np.ndarray,
     result: FitResult,
     star: str,
+    ylabel: str = "Magnitude",
+    invert: bool = True,
+    xlabel: str = "Time",
+    title: str | None = None,
+    plain_time: bool = False,
 ) -> Path:
     """Save one fit figure.
 
     Args:
         path (pathlib.Path): PNG path.
         time (numpy.ndarray): Times of the points.
-        values (numpy.ndarray): Magnitudes at those times.
+        values (numpy.ndarray): Values at those times.
         result (FitResult): Fit of that series.
-        star (str): File stem, used in the title.
+        star (str): File stem, used in the title when ``title`` is omitted.
+        ylabel (str): Label of the vertical axis.
+        invert (bool): Draw larger values downward. Used for magnitudes.
+        xlabel (str): Label of the horizontal axis.
+        title (str | None): Title text. The default names the status.
+        plain_time (bool): Print the horizontal axis without a power offset.
 
     Returns:
         pathlib.Path: The written PNG.
 
     Raises:
+        ValueError: If ``time`` is empty.
         RuntimeError: If the file is missing after the save.
     """
+    if np.asarray(time).size == 0:
+        raise ValueError(f"no points to draw: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with plt.rc_context({"font.size": 20, "font.family": "serif"}):
         fig, ax = plt.subplots(figsize=(10, 7))
         ax.scatter(time, values, s=28, c="0.35", linewidths=0, zorder=2)
         _draw_model(ax, result, float(np.min(time)), float(np.max(time)))
+        _draw_junctions(ax, result)
         _draw_time(ax, result)
-        ax.invert_yaxis()
-        ax.set_title(_title(star, result))
-        ax.set_xlabel("Time")
-        ax.set_ylabel("Magnitude")
+        if invert:
+            ax.invert_yaxis()
+        ax.set_title(title if title is not None else _title(star, result))
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        if plain_time:
+            ax.ticklabel_format(axis="x", useOffset=False, style="plain")
         fig.tight_layout()
         fig.savefig(path)
         plt.close(fig)
@@ -130,8 +149,36 @@ def _pieces(
     return pieces
 
 
+def _draw_junctions(ax, result: FitResult) -> None:
+    """Draw a dotted line through each fitted junction.
+
+    AP, WSAP and WSL have two junctions, C4 and C5. Method A has C4 only.
+    This is the maroon dotted line on the MAVKA review card.
+
+    Args:
+        ax: Matplotlib axes.
+        result (FitResult): Fit. Nothing is drawn when the coefficients
+            are missing.
+    """
+    if result.params is None:
+        return
+    if result.method == "A" and len(result.params) >= 4:
+        edges = (result.params[3],)
+    elif len(result.params) >= 5:
+        edges = (result.params[3], result.params[4])
+    else:
+        return
+    for edge in edges:
+        if not np.isfinite(edge):
+            continue
+        ax.axvline(float(edge), color=_JUNCTION_COLOUR, lw=1.5, ls=":", zorder=4)
+
+
 def _draw_time(ax, result: FitResult) -> None:
-    """Mark a filled time. An empty time is left unmarked.
+    """Mark a filled time, and its uncertainty, as on the review card.
+
+    The time is a dashed line. A finite uncertainty is a shaded band with a
+    dotted line at each edge.
 
     Args:
         ax: Matplotlib axes.
@@ -139,8 +186,20 @@ def _draw_time(ax, result: FitResult) -> None:
     """
     if result.time is None:
         return
-    colour = _TIME_COLOUR if result.sigma_time is not None else _MISSING_SIGMA_COLOUR
-    ax.axvline(result.time, color=colour, lw=2, zorder=4)
+    ax.axvline(result.time, color=_TIME_COLOUR, lw=2, ls="--", zorder=5)
+    sigma = result.sigma_time
+    if sigma is None or not np.isfinite(sigma) or sigma <= 0.0:
+        return
+    ax.axvspan(
+        result.time - sigma,
+        result.time + sigma,
+        color=_TIME_COLOUR,
+        alpha=0.15,
+        lw=0,
+        zorder=1,
+    )
+    ax.axvline(result.time - sigma, color=_TIME_COLOUR, lw=1.5, ls=":", zorder=5)
+    ax.axvline(result.time + sigma, color=_TIME_COLOUR, lw=1.5, ls=":", zorder=5)
 
 
 def _title(star: str, result: FitResult) -> str:

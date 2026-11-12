@@ -28,8 +28,6 @@ Distribution name `lc-approx`, version 0.1.0.
 pip install ".[cli]"
 ```
 
-While changing this package, install it editable so imports follow the clone: `pip install -e ".[test]"`.
-
 ## Import
 
 ```python
@@ -53,6 +51,12 @@ A filled `time` is the command-line time of extremum (`accepted`, `bounds_outsid
 `f_AP_a`, `f_WSAP_a`, `f_WSL_a`, and `f_A_a` evaluate the fitted model and return lists.
 
 Method ids: `AP`, `WSAP`, `WSL`, `A`. Fits of V405 Dra and KP Lyn-2, with a PNG of each fit, are in [examples/README.md](examples/README.md). The original command-line scripts, their launchers, and `test_data/` are in [original_demos/](original_demos/).
+
+## A TESS light curve
+
+`examples/data/TIC388995726_s71_TESS-SPOC_part.vot` is a real TESS light curve: TIC 388995726, sector 71, 200 s cadence, cleaned, and cut to MJD 60234 through 60240. Reading that file needs an extra package, [volightcurve](https://github.com/olgavoz1971/volightcurve) version 0.1.0 or newer. It is not installed by `pip install .` of this package.
+
+`examples/tess_s71.py` is the example of how to handle that file. It reads the VOTable with `volightcurve.read_lightcurve`, takes the time from the declared time system, and uses the SAP flux column. The epoch in the file is the reference for the phase count, not the time of a minimum. The script folds the SAP flux, smooths that curve, and centres the windows on the two minima it finds. The folded figure is in magnitudes. The minima are fitted with WSL, WSAP and AP in flux.
 
 ## Golden results
 

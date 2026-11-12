@@ -39,4 +39,4 @@ The series is the array the caller passes. The fit is unweighted: there is no we
 - `maxfev` on `fit_extremum` defaults to 100000, which is what `original_demos/ila_ap.py` passes. `approx` still defaults to 12000.
 - The `1e-30` check before dividing by C2 is a local numerical guard, not a constant of the AP method.
 
-Examples: `examples/minimum_ap.py`, `examples/maximum_ap.py`, `examples/wsl_sigma_missing.py`, `examples/batch_continues.py`.
+Examples: `examples/simple_example.py` for the two small files, and `examples/tess_s71.py` for a TESS light curve. The TESS file needs volightcurve. Read that script before writing another light-curve fit: SAP flux goes into `fit_extremum`, magnitudes are only for the folded figure, and the time comes from `get_observation_mjd`. The file epoch is the phase origin only. The minima are the two dips of the smoothed folded SAP flux.

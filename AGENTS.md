@@ -24,7 +24,7 @@ from ila_code import fit_extremum, FitResult
 
 ## Examples
 
-`examples/` holds the scripts to copy. Run them from the repository root.
+`examples/` holds the scripts to copy. Run them from the repository root. `examples/tess_s71.py` is the real TESS light curve. It needs volightcurve, and it shows how the file is read.
 
 ## What not to treat as the interface
 
