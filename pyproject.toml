@@ -25,6 +25,15 @@ cli = [
     "matplotlib",
     "colorama",
 ]
+test = [
+    "pytest",
+    "pandas",
+    "matplotlib",
+    "colorama",
+]
 
 [tool.setuptools]
 packages = ["ila_code"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

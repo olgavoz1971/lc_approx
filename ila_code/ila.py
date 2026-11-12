@@ -130,7 +130,12 @@ def approx(method, t_obs, m_obs, maxfev=12000):
         raise Exception(f"Unknown mapproximation ethod: {method}")
     return params_opt, params_cov, param_warning
 
-def method_result(method, params_opt, params_cov, t_min, t_max):
+def extremum_terms(method, params_opt, params_cov):
+    """Timing values before method_result wipes an AP or WSAP vertex outside [C4, C5].
+
+    The arithmetic is the original method_result arithmetic. Callers that
+    want the command-line time use method_result, which applies that wipe.
+    """
     warning = None
     time_of_extremum = np.nan
     time_extr_sig = np.nan
@@ -145,7 +150,7 @@ def method_result(method, params_opt, params_cov, t_min, t_max):
             time_of_extremum = (C4 + C5) / 2.0 - C3 / C2 / 2.0
         else:
             time_of_extremum = (C4 + C5) / 2.0
-        # we suppose that the extremun must be in the parabolic part    
+        # we suppose that the extremun must be in the parabolic part
         if C4 <= time_of_extremum <= C5:
             if method == "AP":
                 time_of_extremum = (C4 + C5) / 2.0 - C3 / C2 / 2.0
@@ -173,10 +178,6 @@ def method_result(method, params_opt, params_cov, t_min, t_max):
                 #mag_extr_sig = np.nan
         else:
             warning = "The extremum is out of the parabolic part! Try another method."
-            time_of_extremum = np.nan
-            time_extr_sig = np.nan
-            mag_of_extremum = np.nan
-            mag_extr_sig = np.nan
     elif method == "WSL":
         C1, C2, C3, C4, C5 = params_opt
         cov_matrix = params_cov
@@ -203,5 +204,20 @@ def method_result(method, params_opt, params_cov, t_min, t_max):
     else:
         raise Exception(f"Unsupported method: {method}")
 
+    return time_of_extremum, time_extr_sig, mag_of_extremum, mag_extr_sig, eclipse_duration, eclipse_sig, warning
+
+def method_result(method, params_opt, params_cov, t_min, t_max):
+    time_of_extremum, time_extr_sig, mag_of_extremum, mag_extr_sig, eclipse_duration, eclipse_sig, warning = extremum_terms(
+        method, params_opt, params_cov)
+    if method == "AP" or method == "WSAP":
+        C4 = params_opt[3]
+        C5 = params_opt[4]
+        # Same cut as before: a vertex outside the parabolic part is not a command-line time.
+        if not (C4 <= time_of_extremum <= C5):
+            warning = "The extremum is out of the parabolic part! Try another method."
+            time_of_extremum = np.nan
+            time_extr_sig = np.nan
+            mag_of_extremum = np.nan
+            mag_extr_sig = np.nan
     return time_of_extremum, time_extr_sig, mag_of_extremum, mag_extr_sig, eclipse_duration, eclipse_sig, warning
 
