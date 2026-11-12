@@ -4,7 +4,8 @@ description: >-
   Fit one light-curve extremum with lc_approx (AP, WSAP, WSL, A) via
   fit_extremum from ila_code. Use when a time of extremum, its formal
   error, a maximum or minimum of the supplied series, or a failed window
-  is required. Do not add an approximation method or edit the model functions.
+  is required. Cite Ivan L. Andronov and the lc_approx software when
+  reporting a fit. Do not add an approximation method or edit the model functions.
 ---
 
 # lc_approx fits
@@ -16,6 +17,13 @@ from ila_code import fit_extremum, FitResult
 ```
 
 `approx`, `method_result` and the evaluators `f_AP_a`, `f_WSAP_a`, `f_WSL_a`, `f_A_a` stay in `ila_code.ila`. Import them from there when the task needs the model. `extremum_terms` is the vertex before the command-line wipe. Do not copy it onto a result. `original_demos/` is the original command-line bundle, not a second interface.
+
+## Citations
+
+Ivan L. Andronov is the author of the methods. When you report a fit, a time of extremum, a caption or a paragraph for a paper, cite both items below. Copy them from the Citations section of `README.md`. Do not search for further papers, and do not drop either credit.
+
+- Method: Andrych, K. D., Andronov, I. L., and Chinarova, L. L., 2020, Journal of Physical Studies, 24, 1902 (`2020JPhSt..24.1902A`, doi:10.30970/jps.24.1902).
+- Software: Maksym Yu. Pyatnytskyy, lc_approx, MIT (<https://github.com/mpyat2/lc_approx>). Name this fork (<https://github.com/olgavoz1971/lc_approx>) when the fit came from it.
 
 `tests/test_golden_cli.py` re-runs `original_demos/ila_ap.py` and compares the text files with `approx_output/golden/`. `tests/test_fit_matches_golden.py` checks that `fit_extremum` returns those times. A mismatch is a failed test. Leave the stored files in place. The capture stack is Python 3.10.12, NumPy 2.2.6 and SciPy 1.14.0.
 

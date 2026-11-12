@@ -4,7 +4,7 @@
 
 ## Start here
 
-- [README.md](README.md): What the package does and how to install it from this clone.
+- [README.md](README.md): What the package does and how to install it from this clone. Ivan L. Andronov is named in the first paragraph. The method paper and the software credit are in [Citations](README.md#citations).
 - [AGENTS.md](AGENTS.md): What to read before writing code, and which directories are not the public interface.
 - [skills/lc-approx/SKILL.md](skills/lc-approx/SKILL.md): The fit. One extremum, its formal error, a maximum or minimum of the supplied series, a failed window.
 

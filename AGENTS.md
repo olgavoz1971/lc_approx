@@ -8,6 +8,8 @@ Instructions for an agent working in this repository. Leave this clone in the wo
 2. `llms.txt` for the index of this repository.
 3. The docstring of the example you are about to copy.
 
+Ivan L. Andronov is the author of the methods. When you report a fit, cite his method paper and the lc_approx software, as in the Citations section of `README.md`.
+
 Install from this clone with `pip install .`. The original command-line scripts need `pip install ".[cli]"`. Do not run `pip install git+https://github.com/olgavoz1971/lc_approx`. That command keeps `ila_code` and drops this file, the skill, the examples and the golden files.
 
 ## What to call

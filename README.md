@@ -1,6 +1,6 @@
 # lc_approx
 
-Extended fork of [mpyat2/lc_approx](https://github.com/mpyat2/lc_approx). The approximation methods in `ila_code/ila.py` are the original ones. Licence: MIT. Copyright 2025 Maksym Yu. Pyatnytskyy.
+The approximation methods are those of Ivan L. Andronov. This is an installable fork of Maksym Yu. Pyatnytskyy's [mpyat2/lc_approx](https://github.com/mpyat2/lc_approx). The functions in `ila_code/ila.py` are that implementation. Licence: MIT. Copyright 2025 Maksym Yu. Pyatnytskyy.
 
 ## For AI agents
 
@@ -66,6 +66,16 @@ python -m pytest
 ```
 
 `tests/test_golden_cli.py` re-runs the stored commands and compares the whole text file. `tests/test_fit_matches_golden.py` checks that `fit_extremum` returns those times. The files were captured with Python 3.10.12, NumPy 2.2.6 and SciPy 1.14.0. A different SciPy can change the last digits and fail the test. The stored files stay as they are.
+
+## Citations
+
+Ivan L. Andronov is the author of the methods AP, WSAP, WSL and A. When you report a fit, cite the method paper and the software.
+
+Andrych, Kateryna D.; Andronov, Ivan L.; Chinarova, Lidia L. 2020, Journal of Physical Studies, Vol. 24, No. 1, Article 1902. Bibcode 2020JPhSt..24.1902A. DOI 10.30970/jps.24.1902, 10.48550/arXiv.1912.07677.
+
+The implementation is Maksym Yu. Pyatnytskyy, lc_approx, MIT, <https://github.com/mpyat2/lc_approx>. This fork is <https://github.com/olgavoz1971/lc_approx>.
+
+This is the reference list recorded in this repository.
 
 -------------------------------------------------------------------------------
 
